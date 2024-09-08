@@ -1,0 +1,4 @@
+(executable
+ (public_name boats)
+ (name main)
+ (libraries boats base stdio str))
