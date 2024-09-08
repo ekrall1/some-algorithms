@@ -13,21 +13,6 @@ let extract_int = function
   | "" -> None
   | t -> Some (Int.of_string (Stdlib.String.trim t))
 
-let solve_fn (capacity : int) (lst : int list) : int =
-  let _ = Stdlib.List.sort compare lst in
-  let boats = ref 0 in
-  let smallest = ref 0 in
-  let biggest = ref (Stdlib.List.length lst - 1) in
-  while !biggest > !smallest do
-    if Stdlib.List.nth lst !biggest + Stdlib.List.nth lst !smallest <= capacity
-    then (
-      biggest := !biggest - 1;
-      smallest := !smallest + 1)
-    else biggest := !biggest - 1;
-    boats := !boats + 1
-  done;
-  !boats
-
 let parse_lines (lines : string list) =
   match lines with
   | [ line1; line2; _ ] ->
@@ -49,6 +34,22 @@ let input_text_parser (t : string) : input =
 let result_text = function
   | Unknown -> "Solver not implemented"
   | ResultInt x -> Int.to_string x
+
+(* the algorithm *)
+let solve_fn (capacity : int) (lst : int list) : int =
+  let _ = Stdlib.List.sort compare lst in
+  let boats = ref 0 in
+  let smallest = ref 0 in
+  let biggest = ref (Stdlib.List.length lst - 1) in
+  while !biggest > !smallest do
+    if Stdlib.List.nth lst !biggest + Stdlib.List.nth lst !smallest <= capacity
+    then (
+      biggest := !biggest - 1;
+      smallest := !smallest + 1)
+    else biggest := !biggest - 1;
+    boats := !boats + 1
+  done;
+  !boats
 
 (* solve *)
 let solver (i : input) : result =
